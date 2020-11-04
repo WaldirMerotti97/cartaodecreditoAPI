@@ -3,14 +3,12 @@ package br.com.itau.cartaodecreditoAPI.cartaodecreditoAPI.controllers.proposta;
 import java.net.URI;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,15 +29,15 @@ import br.com.itau.cartaodecreditoAPI.cartaodecreditoAPI.model.dto.PropostaDto;
 
 @RestController
 @RequestMapping("propostas")
-public class NovaPropostaController {
+public class NovaPropostaController1 {
 
-	private final Logger log = LoggerFactory.getLogger(NovaPropostaController.class);
+	private final Logger log = LoggerFactory.getLogger(NovaPropostaController1.class);
 	private EntityManager entityManager;
 	// 1
 	private final BloqueiaDocumentoIgualValidator bloqueiaDocumentoIgualValidator;
 	private RestTemplate restTemplate;
 
-	public NovaPropostaController(EntityManager entityManager,
+	public NovaPropostaController1(EntityManager entityManager,
 			BloqueiaDocumentoIgualValidator bloqueiaDocumentoIgualValidator, RestTemplate restTemplate) {
 		this.entityManager = entityManager;
 		this.bloqueiaDocumentoIgualValidator = bloqueiaDocumentoIgualValidator;
@@ -61,6 +59,7 @@ public class NovaPropostaController {
 		// 1
 		Proposta proposta = novaPropostaForm.toModel();
 
+		// 1
 		AnalisePropostaForm analisePropostaForm = proposta.toAnalisePropostaForm();
 
 		final String uriAnalise = analiseHost + "/api/solicitacao";
@@ -72,13 +71,6 @@ public class NovaPropostaController {
 
 		// 1
 		proposta.setPropostaStatus(AnalisePropostaStatus.obtemStatus(analisePropostaDto));
-
-//		final String uriGeracaoCartao = criacaoCartaoHost + "/api/cartoes";
-
-		// faz a criacao do cartao em segundo plano e retorna o http status da
-		// requisicao
-//		ResponseEntity<String> resposta = this.restTemplate.exchange(uriGeracaoCartao, HttpMethod.POST,
-//				analisePropostaForm.toHttpEntity(), String.class);
 
 		entityManager.persist(proposta);
 

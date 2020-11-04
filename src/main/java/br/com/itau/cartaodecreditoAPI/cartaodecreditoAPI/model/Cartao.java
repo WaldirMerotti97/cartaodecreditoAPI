@@ -2,6 +2,7 @@ package br.com.itau.cartaodecreditoAPI.cartaodecreditoAPI.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,6 +38,8 @@ public class Cartao {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Vencimento vencimento;
 	private String idProposta;
+	@OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+	private List<Biometria> biometrias;
 
 	public Cartao() {
 
@@ -146,11 +149,20 @@ public class Cartao {
 		this.idProposta = idProposta;
 	}
 
+	public List<Biometria> getBiometrias() {
+		return biometrias;
+	}
+
+	public void setBiometrias(List<Biometria> biometria) {
+		this.biometrias = biometria;
+	}
+
 	@Override
 	public String toString() {
 		return "Cartao [id=" + id + ", emitidoEm=" + emitidoEm + ", titular=" + titular + ", bloqueios=" + bloqueios
 				+ ", avisos=" + avisos + ", carteiras=" + carteiras + ", parcelas=" + parcelas + ", limite=" + limite
-				+ ", renegociacao=" + renegociacao + ", vencimento=" + vencimento + ", idProposta=" + idProposta + "]";
+				+ ", renegociacao=" + renegociacao + ", vencimento=" + vencimento + ", idProposta=" + idProposta
+				+ ", biometria=" + biometrias + "]";
 	}
 
 }

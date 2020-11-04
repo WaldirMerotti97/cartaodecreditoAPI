@@ -7,8 +7,6 @@ import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
-import org.springframework.boot.jackson.JsonObjectSerializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +16,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import br.com.itau.cartaodecreditoAPI.cartaodecreditoAPI.enums.PropostaStatus;
 import br.com.itau.cartaodecreditoAPI.cartaodecreditoAPI.model.Cartao;
@@ -42,7 +38,7 @@ public class CriacaoCartaoSchedule {
 
 	// responsavel por criar os cartoes de maneira assincrona
 	// proposta status = 0 eh elegivel
-	@Scheduled(fixedRate = 10000)
+	@Scheduled(fixedRate = 120000)
 	@Transactional
 	public void persisteCartao() {
 
